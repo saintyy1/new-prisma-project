@@ -2,6 +2,7 @@ import transporter from './nodemailerService.js';
 import crypto from 'crypto';
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
+const ALLOWED_CORS_DOMAIN = process.env.ALLOWED_CORS_DOMAIN;
 
 // Handle user login
 let loginUserAsync = async (email, password) => {
@@ -107,7 +108,7 @@ let forgotPasswordAsync = async (email) => {
     });
 
     // Create the reset link
-    const resetLink = `http://127.0.0.1:5500/pages/public/verifyresetlink.html?token=${resetToken}&email=${email}`;
+    const resetLink = `${ALLOWED_CORS_DOMAIN}/pages/public/verifyresetlink.html?token=${resetToken}&email=${email}`;
         
     let subject = 'Password Reset for Idea App';
     let htmlContent = `
