@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Notes {
+  noteId    Int   @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt // Automatically updated on each change
+  content   String
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  Int
+}
+
+model User {
+  id  Int   @id @default(autoincrement())
+  F_name String
+  L_name String
+  gender   Gender // Add this line for gender
+  email String @unique
+  notes Notes []
+  password String
+  status     String   @default("Active")
+  resetPasswordToken   String?   // Optional token for password reset
+  resetPasswordExpires DateTime?  // Optional expiry date for the reset token
+  isVerified       Boolean  @default(false)
+  verificationCode String?
+}
+
+// Enum for gender options
+enum Gender {
+  Male
+  Female
+}

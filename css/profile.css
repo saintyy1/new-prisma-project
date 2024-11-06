@@ -1,0 +1,47 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #1d1f27;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff !important;
+}
+
+.profile-cards-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.card {
+    background-color: lightgray;
+}
+
+.card-title {
+    font-size: 0.8rem;
+    color: darkblue;
+}
+
+.logoutBtn {
+    border: none;
+    background: none;
+}
+
+.logoutBtn:hover {
+    color: #adb5bd;
+}
+
+@media (max-width: 326px) {
+    .changePasswordBtn {
+        margin-right: 0rem !important;
+    }
+}

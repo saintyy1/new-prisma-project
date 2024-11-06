@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9fafb;
+}
+
+.left-section {
+    background-color: #f9fafb;
+    padding: 3rem;
+    max-height: 100vh;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+}
+
+.signIn-image {
+    max-height: 100vh;
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1030px) {
+    .left-section {
+        padding: 1.2rem;
+    }
+}
