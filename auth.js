@@ -110,7 +110,7 @@ let forgotPasswordAsync = async (email) => {
     // Create the reset link
     const resetLink = `${ALLOWED_CORS_DOMAIN}/pages/public/verifyresetlink.html?token=${resetToken}&email=${email}`;
         
-    let subject = 'Password Reset for Idea App';
+    let subject = 'Password Reset for IdeaTrack';
     let htmlContent = `
         <p>You requested a password reset.</p>
         <p>Click the link below to reset your password:</p>

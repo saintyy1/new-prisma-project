@@ -95,7 +95,7 @@ const server = createServer(async (req, res) => {
                 const newUser = await userController.createUserAsync(userData);
 
                 let email = userData.email;
-                let subject = 'Verify Your Email';
+                let subject = 'Email verification for IdeaTrack';
                 let htmlContent = `
                     <p>You requested an Email Verification.</p>
                     <p>Click the link below to verify your email:</p>
