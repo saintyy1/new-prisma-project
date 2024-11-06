@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 
 const server = createServer(async (req, res) => {
     // Set CORS headers
-    res.setHeader('Access-Control-Allow-Origin', `${ALLOWED_CORS_DOMAIN}:${PORT}`);  // Allow your frontend's origin
+    res.setHeader('Access-Control-Allow-Origin', `${ALLOWED_CORS_DOMAIN}`);  // Allow your frontend's origin
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // Allow specific methods
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');  // Allow specific headers
     if (req.method === 'OPTIONS') {
