@@ -8,6 +8,7 @@ import authController from './auth.js';
 import transporter from './nodemailerService.js';
 
 const PORT = process.env.PORT;
+const ALLOWED_CORS_DOMAIN = process.env.ALLOWED_CORS_DOMAIN;
 
 // Get current path
 const __filename = url.fileURLToPath(import.meta.url);
@@ -16,7 +17,7 @@ const __dirname = path.dirname(__filename);
 
 const server = createServer(async (req, res) => {
     // Set CORS headers
-    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');  // Allow your frontend's origin
+    res.setHeader('Access-Control-Allow-Origin', `${ALLOWED_CORS_DOMAIN}:${PORT}`);  // Allow your frontend's origin
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // Allow specific methods
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');  // Allow specific headers
     if (req.method === 'OPTIONS') {
@@ -57,11 +58,17 @@ const server = createServer(async (req, res) => {
         if(filePath == "./index.html"){
             filePath = path.join(__dirname, 'pages', 'public', 'index.html');
         }
-        
-        const data = await fs.readFile(filePath);
-        res.setHeader('Content-Type', contentType);
-        res.write(data);
-        res.end();
+
+        try {
+            const data = await fs.readFile(filePath);
+
+            res.setHeader('Content-Type', contentType);
+            res.write(data);
+            res.end();
+        } catch {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'File not found' }));
+        }
     }
     else if (req.url === '/api/users' && req.method === 'POST') {
         let body = '';
