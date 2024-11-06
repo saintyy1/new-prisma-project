@@ -8,7 +8,7 @@ import authController from './auth.js';
 import transporter from './nodemailerService.js';
 
 const PORT = process.env.PORT;
-const ALLOWED_CORS_DOMAIN = process.env.ALLOWED_CORS_DOMAIN;
+
 
 // Get current path
 const __filename = url.fileURLToPath(import.meta.url);

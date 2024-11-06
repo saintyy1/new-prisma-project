@@ -108,7 +108,7 @@ let forgotPasswordAsync = async (email) => {
     });
 
     // Create the reset link
-    const resetLink = `${ALLOWED_CORS_DOMAIN}/pages/public/verifyresetlink.html?token=${resetToken}&email=${email}`;
+    const resetLink = `https://idea-track.onrender.com/pages/public/verifyresetlink.html?token=${resetToken}&email=${email}`;
         
     let subject = 'Password Reset for IdeaTrack';
     let htmlContent = `
