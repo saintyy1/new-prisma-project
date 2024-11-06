@@ -1,4 +1,7 @@
 import { createServer } from 'http';
+import fs from 'fs/promises';
+import path from 'path';
+import url from 'url';
 import userController from './UsersController.js';
 import noteController from './NotesController.js';
 import authController from './auth.js';
@@ -6,23 +9,61 @@ import transporter from './nodemailerService.js';
 
 const PORT = process.env.PORT;
 
-const server = createServer(async (req, res) => {
-    // Handle CORS preflight requests
-    if (req.method === 'OPTIONS') {
-        res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-        res.writeHead(204);
-        return res.end();
-    }
+// Get current path
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+
+const server = createServer(async (req, res) => {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');  // Allow your frontend's origin
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // Allow specific methods
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');  // Allow specific headers
+    if (req.method === 'OPTIONS') {
+        res.writeHead(204);
+        return res.end();
+    }
 
     // Handle POST Request (Create a new user)
-    if (req.url === '/api/users' && req.method === 'POST') {
+    if (!req.url.includes("/api") && req.method === 'GET') {
+        //fetch static contents
+        let filePath = '.' + req.url;
+        if (filePath === './') filePath = './index.html'; // Default to index.html
+
+        const extname = path.extname(filePath);
+        let contentType = 'text/html';
+
+        // Set content type based on file extension
+        switch (extname) {
+            case '.js':
+                contentType = 'text/javascript';
+                break;
+            case '.css':
+                contentType = 'text/css';
+                break;
+            case '.json':
+                contentType = 'application/json';
+                break;
+            case '.png':
+                contentType = 'image/png';
+                break;
+            case '.jpg':
+                contentType = 'image/jpg';
+                break;
+            case '.svg':
+                contentType = 'image/svg+xml';
+                break; 
+        }
+        if(filePath == "./index.html"){
+            filePath = path.join(__dirname, 'pages', 'public', 'index.html');
+        }
+        
+        const data = await fs.readFile(filePath);
+        res.setHeader('Content-Type', contentType);
+        res.write(data);
+        res.end();
+    }
+    else if (req.url === '/api/users' && req.method === 'POST') {
         let body = '';
 
         req.on('data', chunk => {
