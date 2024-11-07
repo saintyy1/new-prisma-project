@@ -105,7 +105,7 @@ let forgotPasswordAsync = async (email) => {
             resetPasswordExpires: resetTokenExpires,
         },
     });
-
+    
     // Create the reset link
     const resetLink = `http://127.0.0.1:5500/pages/public/verifyresetlink.html?token=${resetToken}&email=${email}`;
         
